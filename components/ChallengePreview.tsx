@@ -14,7 +14,7 @@ export function ChallengePreview({ match }: { match: Match }) {
   return (
     <section aria-labelledby="preview-title" className="pb-2">
       <h2 id="preview-title" className="text-[13px] font-medium tracking-wide text-muted uppercase md:text-sm">
-        Alguns desafios da 1.ª ronda
+        Alguns eventos da 1.ª ronda
       </h2>
       <ul className="mt-2.5 flex flex-col gap-1.5 md:mt-4 md:gap-2.5">
         {teaser.map((c, i) => (
@@ -36,13 +36,13 @@ export function ChallengePreview({ match }: { match: Match }) {
           className="rise rounded-xl border border-dashed border-line py-2 text-center font-display text-lg font-semibold text-muted uppercase md:hidden"
           style={{ animationDelay: `${MOBILE_COUNT * 60}ms` }}
         >
-          +{total - MOBILE_COUNT} desafios por revelar
+          +{total - MOBILE_COUNT} eventos por revelar
         </li>
         <li
           className="rise card-back hidden min-h-24 flex-col items-center justify-center rounded-2xl text-center text-white md:flex"
           style={{ animationDelay: `${teaser.length * 60}ms` }}
         >
-          <span className="font-display text-2xl font-bold uppercase">+{total - teaser.length} desafios por revelar</span>
+          <span className="font-display text-2xl font-bold uppercase">+{total - teaser.length} eventos por revelar</span>
           <span className="mt-0.5 text-sm text-white/80">Sorteados ronda a ronda, no dia do jogo</span>
         </li>
       </ul>
