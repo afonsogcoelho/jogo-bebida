@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0f0d;
+  --color-surface: #141a17;
+  --color-surface-2: #1b231f;
+  --color-line: #27302b;
+  --color-ink: #f5f5f0;
+  --color-muted: #9ba49e;
+  --color-accent: #e4002b;
+  --color-accent-press: #c20025;
+  --color-pitch: #22a55b;
+
+  --font-display: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* Vinheta muito subtil no topo: luz de estádio, não gradiente decorativo */
+.stadium-glow {
+  background: radial-gradient(120% 60% at 50% -10%, rgb(255 255 255 / 0.06), transparent 60%);
+}
+
+@utility btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.875rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  transition:
+    background-color 150ms ease-out,
+    transform 150ms ease-out,
+    opacity 150ms ease-out;
+  user-select: none;
+  &:active {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+@utility btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  &:active {
+    background: var(--color-accent-press);
+  }
+}
+
+@utility btn-secondary {
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+}
+
+@utility btn-ghost {
+  color: var(--color-muted);
+  min-height: 3rem;
+  font-weight: 500;
+}
+
+/* Barra de ação fixa no fundo, respeita o home indicator do iPhone */
+@utility action-bar {
+  position: sticky;
+  bottom: 0;
+  margin-inline: -1.25rem;
+  padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--color-bg) 70%, transparent);
+  @media (min-width: 48rem) {
+    position: static;
+    margin-inline: 0;
+    padding: 0;
+    background: none;
+  }
+}
+
+/* Superfície vermelha com linhas de meio-campo */
+.card-back {
+  background-color: var(--color-accent);
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 38px, rgb(255 255 255 / 0.16) 39px, rgb(255 255 255 / 0.16) 40.5px, transparent 41.5px),
+    linear-gradient(90deg, transparent calc(50% - 0.75px), rgb(255 255 255 / 0.16) calc(50% - 0.75px), rgb(255 255 255 / 0.16) calc(50% + 0.75px), transparent calc(50% + 0.75px));
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 320ms ease-out both;
+}
+
+/* ---------- Sorteio ---------- */
+@keyframes slot-tick {
+  from {
+    transform: translateY(-35%);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+  }
+}
+.slot-tick {
+  animation: slot-tick 50ms ease-out both;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+  }
+}
+.pop {
+  animation: pop 320ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.pop-late {
+  animation-delay: 160ms;
+}
+
+/* Contorno vermelho breve no momento em que o desafio assenta */
+@keyframes land {
+  0% {
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+  }
+  100% {
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+}
+.land {
+  animation: land 900ms ease-out both;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.sheet {
+  animation: sheet-in 260ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.backdrop {
+  animation: fade-in 200ms ease-out both;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}

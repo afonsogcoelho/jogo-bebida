@@ -1,0 +1,3 @@
+# O export estático do Next 16 grava o payload da página /jogo em __next.jogo/__PAGE__.txt,
+# mas a navegação no cliente pede __next.jogo.__PAGE__.txt. Esta regra liga os dois.
+/jogo/__next.jogo.__PAGE__.txt  /jogo/__next.jogo/__PAGE__.txt  200
