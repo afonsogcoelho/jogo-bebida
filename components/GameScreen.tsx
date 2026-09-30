@@ -198,7 +198,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
         (nextRound ? (
           <ConfirmSheet
             title={`Já vão nos ${nextRound.startMinute}'?`}
-            body={`Os desafios da Ronda ${round.id} deixam de contar. Cada um recebe um desafio e um evento raro novos para ${nextRound.label}. Não dá para voltar atrás.`}
+            body={`Os desafios da Ronda ${round.id} deixam de contar. Cada pessoa recebe um evento principal e um evento raro novos para ${nextRound.label}. Não dá para voltar atrás.`}
             confirmLabel={`Sortear Ronda ${nextRound.id}`}
             onConfirm={confirmNext}
             onCancel={() => setConfirming(false)}

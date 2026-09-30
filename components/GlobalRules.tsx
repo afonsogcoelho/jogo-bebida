@@ -15,7 +15,7 @@ export function GlobalRules({ rules }: { rules: GlobalRule[] }) {
         {rules.map((rule) => (
           <li key={rule.text} className="flex items-center justify-between gap-4 border-t border-line py-2">
             <span className="text-ink/85">{rule.text}</span>
-            <span className="shrink-0 text-muted">Todos · {timesLabel(rule.times)}</span>
+            <span className="shrink-0 whitespace-nowrap text-muted">Todos · {timesLabel(rule.times)}</span>
           </li>
         ))}
       </ul>

@@ -26,7 +26,7 @@ export function ChallengePreview({ match }: { match: Match }) {
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <span className="font-display text-lg leading-tight font-semibold uppercase md:text-2xl">{c.text}</span>
-            <span className="shrink-0 font-display text-xl leading-none font-bold md:text-2xl">
+            <span className="shrink-0 font-display text-base leading-none font-bold whitespace-nowrap uppercase md:text-xl">
               {timesLabel(c.times)}
             </span>
           </li>

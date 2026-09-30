@@ -99,10 +99,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                   </p>
                   {main.note && <p className="mt-0.5 text-[13px] leading-snug text-muted">{main.note}</p>}
                 </div>
-                <span
-                  className="shrink-0 font-display text-2xl leading-[1.1] font-bold md:text-[1.75rem]"
-                  aria-label={`${main.times} vezes`}
-                >
+                <span className="shrink-0 pt-0.5 font-display text-lg leading-[1.1] font-bold whitespace-nowrap uppercase md:text-xl">
                   {timesLabel(main.times)}
                 </span>
               </div>
@@ -116,10 +113,10 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                   {rolling.text}
                 </p>
                 <span
-                  className="shrink-0 font-display text-2xl leading-[1.1] font-bold text-ink/20 md:text-[1.75rem]"
+                  className="shrink-0 pt-0.5 font-display text-lg leading-[1.1] font-bold whitespace-nowrap text-ink/20 uppercase md:text-xl"
                   aria-hidden="true"
                 >
-                  ?x
+                  ? golos
                 </span>
               </div>
             )}
@@ -133,8 +130,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                     {rare.text}
                   </span>
                   <span
-                    className={`shrink-0 font-display text-base leading-none font-bold text-accent ${spinning ? "pop pop-late" : ""}`}
-                    aria-label={`${rare.times} vezes`}
+                    className={`shrink-0 font-display text-sm leading-none font-bold whitespace-nowrap text-accent uppercase ${spinning ? "pop pop-late" : ""}`}
                   >
                     {timesLabel(rare.times)}
                   </span>

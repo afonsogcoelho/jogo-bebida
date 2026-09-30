@@ -95,8 +95,9 @@ export function findRareEvent(match: Match, id: string | undefined): Challenge |
   return match.rareEvents.find((c) => c.id === id);
 }
 
+/** "3 golos" (no grupo, cada gole é um "golo"). Nunca "3x": não queremos cara de apostas. */
 export function timesLabel(times: number) {
-  return `${times}x`;
+  return times === 1 ? "1 golo" : `${times} golos`;
 }
 
 /** Desafios principais + alternativas (os raros não contam: são surpresa). */

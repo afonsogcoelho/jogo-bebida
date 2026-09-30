@@ -37,7 +37,7 @@ export function FinalScreen({ match, game }: { match: Match; game: GameState }) 
                       <div className="min-w-0 flex-1">
                         <div className="flex justify-between gap-3">
                           <span>{main?.text}</span>
-                          {main && <span className="shrink-0 font-semibold">{timesLabel(main.times)}</span>}
+                          {main && <span className="shrink-0 font-semibold whitespace-nowrap">{timesLabel(main.times)}</span>}
                         </div>
                         {rare && (
                           <div className="mt-0.5 flex justify-between gap-3 text-sm text-muted">
@@ -47,7 +47,7 @@ export function FinalScreen({ match, game }: { match: Match; game: GameState }) 
                               </span>
                               {rare.text}
                             </span>
-                            <span className="shrink-0">{timesLabel(rare.times)}</span>
+                            <span className="shrink-0 whitespace-nowrap">{timesLabel(rare.times)}</span>
                           </div>
                         )}
                       </div>

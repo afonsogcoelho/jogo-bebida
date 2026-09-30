@@ -4,8 +4,10 @@ import { formatShortDay, formatTime } from "@/lib/dates";
 export function MatchHero({ match }: { match: Match }) {
   return (
     <header className="pt-8 pb-5 md:pt-0 md:pb-8">
-      <p className="text-[13px] font-medium tracking-wide text-muted uppercase md:text-base">
-        {match.competition} · {formatShortDay(match)} · {formatTime(match.kickoff)}
+      <p className="text-[13px] leading-snug font-medium tracking-wide text-muted uppercase md:text-base">
+        <span className="text-accent">Jogo de bebida</span> · {match.competition}
+        <br />
+        {formatShortDay(match)} · {formatTime(match.kickoff)}
       </p>
       <h1 className="mt-3 font-display leading-[0.9] font-bold uppercase md:mt-5">
         <span className="text-[3rem] md:block md:text-[6.5rem] lg:text-[7.5rem]">{match.teamA}</span>
@@ -13,7 +15,7 @@ export function MatchHero({ match }: { match: Match }) {
         <span className="block text-[3rem] md:text-[6.5rem] lg:text-[7.5rem]">{match.teamB}</span>
       </h1>
       <p className="mt-3 max-w-[21rem] text-base leading-snug text-ink/85 md:mt-6 md:max-w-md md:text-xl">
-        Cada pessoa recebe um desafio e um raro. Se acontecer, bebe o número indicado.
+        Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes o valor de golos indicado.
       </p>
     </header>
   );

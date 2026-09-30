@@ -144,7 +144,7 @@ export function PlayerSetup({ match }: { match: Match }) {
       </div>
 
       <p className="mt-8 text-muted">
-        Cada um recebe um desafio e um evento raro. Quando acontecer, bebe o número indicado.
+        Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes o valor de golos indicado.
       </p>
 
       <div className="action-bar mt-auto pt-6">
