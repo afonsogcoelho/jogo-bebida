@@ -88,7 +88,7 @@ body {
   position: sticky;
   bottom: 0;
   margin-inline: -1.25rem;
-  padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
+  padding: 0.75rem 1.25rem calc(0.75rem + env(safe-area-inset-bottom));
   background: linear-gradient(to top, var(--color-bg) 70%, transparent);
   @media (min-width: 48rem) {
     position: static;

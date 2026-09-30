@@ -70,7 +70,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
   const spinning = running && animate;
 
   return (
-    <ul className="grid grid-cols-1 gap-2.5 md:grid-cols-2 md:gap-3">
+    <ul className="grid grid-cols-1 gap-2 md:gap-3 lg:grid-cols-2">
       {players.map((p, i) => {
         const result = results[p.id];
         if (!result) return null;
@@ -83,57 +83,64 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
           <li
             key={p.id}
             data-landed={landed}
-            className={`flex min-w-0 flex-col rounded-[20px] px-5 pt-4 pb-3.5 transition-colors duration-300 ${
+            className={`flex min-w-0 flex-col rounded-2xl px-4 py-3 transition-colors duration-300 md:px-5 md:py-4 ${
               landed ? "bg-surface-2" : "bg-surface"
             } shadow-[inset_0_0_0_1px_var(--color-line)] ${landed && spinning ? "land" : ""}`}
           >
-            <span className="text-[15px] font-medium text-muted">{p.name}</span>
+            {/* 1. Nome */}
+            <span className="truncate text-[13px] font-semibold tracking-wide text-ink/70 uppercase">{p.name}</span>
 
-            {/* Desafio principal */}
+            {/* 2–3. Desafio principal + valor */}
             {landed ? (
-              <div className={`mt-1 flex items-start justify-between gap-4 ${spinning ? "pop" : ""}`}>
+              <div className={`mt-0.5 flex items-start justify-between gap-3 ${spinning ? "pop" : ""}`}>
                 <div className="min-w-0">
-                  <p className="font-display text-[1.75rem] leading-[1.05] font-bold text-balance uppercase">
+                  <p className="font-display text-[1.375rem] leading-[1.08] font-bold text-balance uppercase md:text-[1.625rem]">
                     {main.text}
                   </p>
-                  {main.note && <p className="mt-1.5 text-sm text-muted">{main.note}</p>}
+                  {main.note && <p className="mt-0.5 text-[13px] leading-snug text-muted">{main.note}</p>}
                 </div>
-                <span className="shrink-0 font-display text-[2rem] leading-none font-bold" aria-label={`${main.times} vezes`}>
+                <span
+                  className="shrink-0 font-display text-2xl leading-[1.1] font-bold md:text-[1.75rem]"
+                  aria-label={`${main.times} vezes`}
+                >
                   {timesLabel(main.times)}
                 </span>
               </div>
             ) : (
-              <div className="mt-1 flex items-start justify-between gap-4">
+              <div className="mt-0.5 flex items-start justify-between gap-3">
                 <p
                   key={rolling.id}
                   aria-hidden="true"
-                  className="slot-tick min-w-0 flex-1 truncate font-display text-[1.75rem] leading-[1.05] font-bold text-ink/35 uppercase"
+                  className="slot-tick min-w-0 flex-1 truncate font-display text-[1.375rem] leading-[1.08] font-bold text-ink/35 uppercase md:text-[1.625rem]"
                 >
                   {rolling.text}
                 </p>
-                <span className="shrink-0 font-display text-[2rem] leading-none font-bold text-ink/20" aria-hidden="true">
+                <span
+                  className="shrink-0 font-display text-2xl leading-[1.1] font-bold text-ink/20 md:text-[1.75rem]"
+                  aria-hidden="true"
+                >
                   ?x
                 </span>
               </div>
             )}
 
-            {/* Evento raro: secundário, revelado quando o principal assenta */}
-            <div className="mt-3 flex items-baseline gap-3 border-t border-line pt-2.5">
-              <span className="shrink-0 text-[11px] font-semibold tracking-[0.12em] text-accent uppercase">Raro</span>
+            {/* 4. Evento raro: uma linha secundária */}
+            <div className="mt-1.5 flex items-baseline gap-2 text-sm">
+              <span className="shrink-0 text-[10px] font-bold tracking-[0.12em] text-accent uppercase">Raro</span>
               {landed ? (
                 <>
-                  <span className={`min-w-0 flex-1 text-[15px] text-ink/90 ${spinning ? "pop pop-late" : ""}`}>
+                  <span className={`min-w-0 flex-1 leading-snug text-ink/75 ${spinning ? "pop pop-late" : ""}`}>
                     {rare.text}
                   </span>
                   <span
-                    className={`shrink-0 font-display text-lg leading-none font-bold text-accent ${spinning ? "pop pop-late" : ""}`}
+                    className={`shrink-0 font-display text-base leading-none font-bold text-accent ${spinning ? "pop pop-late" : ""}`}
                     aria-label={`${rare.times} vezes`}
                   >
                     {timesLabel(rare.times)}
                   </span>
                 </>
               ) : (
-                <span className="flex-1 text-[15px] text-muted/60" aria-hidden="true">
+                <span className="flex-1 text-muted/60" aria-hidden="true">
                   a sortear…
                 </span>
               )}

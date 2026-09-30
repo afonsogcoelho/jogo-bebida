@@ -36,7 +36,7 @@ export function LandingActions({ match }: { match: Match }) {
         </>
       ) : (
         !inProgress && (
-          <dl className="rise grid grid-cols-3 gap-2 border-y border-line py-5 text-center md:max-w-md md:text-left">
+          <dl className="rise grid grid-cols-3 gap-2 border-y border-line py-3 text-center md:max-w-md md:py-5 md:text-left">
             {[
               [match.rounds.length, "rondas"],
               [totalChallenges(match), "desafios"],
@@ -44,7 +44,7 @@ export function LandingActions({ match }: { match: Match }) {
             ].map(([value, label]) => (
               <div key={label}>
                 <dt className="sr-only">{label}</dt>
-                <dd className="font-display text-4xl leading-none font-bold">{value}</dd>
+                <dd className="font-display text-3xl leading-none font-bold md:text-4xl">{value}</dd>
                 <dd className="mt-1 text-sm text-muted">{label}</dd>
               </div>
             ))}
@@ -55,7 +55,7 @@ export function LandingActions({ match }: { match: Match }) {
         <p className="rise mt-5 text-muted">Este jogo já acabou. Ainda dá para jogar a repetição.</p>
       )}
 
-      <div className="action-bar mt-auto flex flex-col gap-2 md:mt-8 md:max-w-sm">
+      <div className="action-bar mt-4 flex flex-col gap-1 md:mt-8 md:max-w-sm">
         {inProgress ? (
           <>
             <Link
@@ -90,7 +90,7 @@ export function LandingActions({ match }: { match: Match }) {
             >
               {startLabel}
             </Link>
-            <ShareButton text={shareText} label="Partilhar com o grupo" location="landing" variant="ghost" />
+            <ShareButton text={shareText} label="Partilhar com o grupo" location="landing" variant="ghost" compact />
           </>
         )}
       </div>

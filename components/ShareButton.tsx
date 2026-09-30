@@ -9,9 +9,11 @@ interface Props {
   location: "landing" | "game" | "final";
   kind?: "link" | "round";
   variant?: "primary" | "secondary" | "ghost";
+  /** Versão discreta: mais baixa e com texto menor (ações secundárias). */
+  compact?: boolean;
 }
 
-export function ShareButton({ text, label, location, kind = "link", variant = "secondary" }: Props) {
+export function ShareButton({ text, label, location, kind = "link", variant = "secondary", compact }: Props) {
   const [copied, setCopied] = useState(false);
 
   async function share() {
@@ -37,7 +39,7 @@ export function ShareButton({ text, label, location, kind = "link", variant = "s
   }
 
   return (
-    <button type="button" onClick={share} className={`btn btn-${variant}`} aria-live="polite">
+    <button type="button" onClick={share} className={`btn btn-${variant} ${compact ? "min-h-10! text-[15px]! font-medium!" : ""}`} aria-live="polite">
       <ShareIcon />
       {copied ? "Link copiado" : label}
     </button>

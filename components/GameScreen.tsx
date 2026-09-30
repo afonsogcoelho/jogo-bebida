@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { GameState, Match } from "@/types/game";
 import { findChallenge, findRareEvent, finishGame, openNextRound, roundPool, timesLabel } from "@/lib/game";
-import { formatWeekday, getMatchMode, roundClockTime, roundUnlockTime } from "@/lib/dates";
+import { formatShortDay, getMatchMode, roundClockTime, roundUnlockTime } from "@/lib/dates";
 import { clearGame, isFreshDraw, markFreshDraw, readModeOverride, saveGame } from "@/lib/storage";
 import { track } from "@/lib/analytics";
 import { DrawReveal, type PlayerResult } from "@/components/DrawReveal";
@@ -37,7 +37,6 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
   }, []);
   const nextUnlocked =
     !nextRound || forceUnlocked || now >= roundUnlockTime(match, nextRound.startMinute);
-  const [from, to] = round.label.split("–");
 
   const results: Record<string, PlayerResult> = {};
   for (const p of game.players) {
@@ -88,7 +87,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
   ].join("\n");
 
   return (
-    <main className="flex flex-1 flex-col md:grid md:grid-cols-[340px_1fr] md:grid-rows-[auto_auto_1fr] md:gap-x-14 md:pt-10 md:pb-16 md:[grid-template-areas:'head_list'_'actions_list'_'extras_list'] lg:grid-cols-[380px_1fr]">
+    <main className="flex flex-1 flex-col md:grid md:grid-cols-[280px_1fr] md:grid-rows-[auto_auto_1fr] md:gap-x-14 md:pt-10 md:pb-16 md:[grid-template-areas:'head_list'_'actions_list'_'extras_list'] lg:grid-cols-[380px_1fr]">
       {/* Cabeçalho da ronda */}
       <div className="md:[grid-area:head]">
         <div className="flex items-center justify-between pt-4 md:pt-0">
@@ -100,7 +99,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
           </button>
         </div>
 
-        <nav aria-label="Rondas" className="mt-4 grid grid-cols-4 gap-1.5">
+        <nav aria-label="Rondas" className="mt-1 grid grid-cols-4 gap-1.5 md:mt-4">
           {match.rounds.map((r, i) => {
             const opened = i <= currentIndex;
             return (
@@ -122,25 +121,22 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
           })}
         </nav>
 
-        <header className="mt-7 flex items-end justify-between gap-4 md:mt-10 md:block">
-          <h1 className="font-display text-[3.25rem] leading-[0.85] font-bold uppercase md:text-[5rem]">
+        <header className="mt-4 flex items-baseline gap-2 md:mt-10 md:block">
+          <h1 className="font-display text-[2.25rem] leading-none font-bold uppercase md:text-[5rem] md:leading-[0.85]">
             Ronda {round.id}
           </h1>
-          <span className="pb-1 font-display text-2xl font-semibold text-muted md:mt-2 md:block md:text-3xl">
+          <span className="font-display text-[1.625rem] leading-none font-semibold text-muted md:mt-2 md:block md:text-3xl">
+            <span className="md:hidden">· </span>
             {round.label}
           </span>
         </header>
-        <p className="mt-3 text-muted" aria-live="polite">
-          {isAnimating
-            ? "A sortear desafios…"
-            : isPast
-              ? "Ronda terminada. Estes desafios já não contam."
-              : `Só contam entre ${from} e ${to}. Quando acontecer, bebe o número indicado.`}
+        <p className="mt-1 text-sm text-muted md:mt-3 md:text-base" aria-live="polite">
+          {isAnimating ? "A sortear…" : isPast ? "Ronda terminada · já não conta." : "Só contam neste intervalo."}
         </p>
       </div>
 
       {/* Desafios dos jogadores */}
-      <div className="mt-5 md:mt-0 md:pt-2 md:[grid-area:list]">
+      <div className="mt-3 md:mt-0 md:pt-2 md:[grid-area:list]">
         <DrawReveal
           key={assignment.roundId}
           players={game.players}
@@ -153,16 +149,16 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
 
       {/* Partilha + regras */}
       <div
-        className={`mt-6 flex flex-col gap-3 transition-opacity duration-300 md:mt-6 md:[grid-area:extras] ${
+        className={`mt-3 flex flex-col gap-1.5 transition-opacity duration-300 md:mt-6 md:gap-3 md:[grid-area:extras] ${
           isAnimating ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <ShareButton text={shareText} label="Enviar ronda ao grupo" location="game" kind="round" variant="ghost" />
+        <ShareButton text={shareText} label="Enviar ronda ao grupo" location="game" kind="round" variant="ghost" compact />
         <GlobalRules rules={match.globalRules} />
       </div>
 
       {/* Ação principal */}
-      <div className="action-bar mt-auto pt-8 md:mt-8 md:[grid-area:actions]">
+      <div className="action-bar mt-auto pt-5 md:mt-8 md:[grid-area:actions]">
         {isAnimating ? (
           <button type="button" className="btn btn-ghost" onClick={stopAnimation}>
             Saltar
@@ -173,16 +169,15 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
           </button>
         ) : nextRound ? (
           <>
-            <div className="mb-2.5 text-center text-sm md:text-left">
-              <p className="font-semibold text-ink">
+            <p className="mb-2 text-center text-[13px] leading-snug text-muted md:text-left md:text-sm">
+              <span className="font-semibold text-ink uppercase">
                 Ronda {nextRound.id} · {nextRound.label}
-              </p>
-              <p className="mt-0.5 text-muted">
-                Disponível por volta dos {nextRound.startMinute}&apos; ·{" "}
-                {getMatchMode(match, now) === "pre" ? `${formatWeekday(match)}, ` : ""}~
-                {roundClockTime(match, nextRound.startMinute)}
-              </p>
-            </div>
+              </span>
+              <br />
+              Disponível por volta dos {nextRound.startMinute}&apos; · ~
+              {getMatchMode(match, now) === "pre" ? `${formatShortDay(match).split(",")[0]} ` : ""}
+              {roundClockTime(match, nextRound.startMinute)}
+            </p>
             <button
               type="button"
               className={`btn ${nextUnlocked ? "btn-primary" : "btn-secondary"}`}
