@@ -112,12 +112,9 @@ export function PlayerSetup({ match }: { match: Match }) {
         <h1 className="font-display text-[2.75rem] leading-none font-bold uppercase md:text-[4rem]">
           Quem joga?
         </h1>
-        <p className="mt-3 text-muted">
-          {count} jogadores. Nomes em branco ficam <span className="whitespace-nowrap">Jogador 1, 2…</span>
-        </p>
       </div>
 
-      <div className="rise mt-6 grid gap-2 md:grid-cols-2" style={{ animationDelay: "60ms" }}>
+      <div className="rise mt-5 grid gap-2 md:mt-6 md:grid-cols-2" style={{ animationDelay: "60ms" }}>
         {Array.from({ length: count }, (_, i) => (
           <input
             key={i}
@@ -143,13 +140,9 @@ export function PlayerSetup({ match }: { match: Match }) {
         ))}
       </div>
 
-      <p className="mt-8 text-muted">
-        Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes o valor de golos indicado.
-      </p>
-
       <div className="action-bar mt-auto pt-6">
         <button type="submit" className="btn btn-primary">
-          Sortear desafios
+          Sortear eventos
         </button>
       </div>
     </form>
