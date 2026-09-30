@@ -30,9 +30,6 @@ export function LandingActions({ match }: { match: Match }) {
           <div className="md:hidden">
             <ChallengePreview match={match} />
           </div>
-          <p className="hidden text-lg text-muted md:block">
-            Cria já o jogo e vê os desafios da Ronda 1. As outras rondas abrem durante o jogo.
-          </p>
         </>
       ) : (
         !inProgress && (

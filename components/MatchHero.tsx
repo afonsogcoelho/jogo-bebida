@@ -3,18 +3,18 @@ import { formatShortDay, formatTime } from "@/lib/dates";
 
 export function MatchHero({ match }: { match: Match }) {
   return (
-    <header className="pt-8 pb-5 md:pt-0 md:pb-8">
+    <header className="pt-8 pb-5 md:pt-0 md:pb-6">
       <p className="text-[13px] leading-snug font-medium tracking-wide text-muted uppercase md:text-base">
         <span className="text-accent">Jogo de bebida</span> · {match.competition}
         <br />
         {formatShortDay(match)} · {formatTime(match.kickoff)}
       </p>
-      <h1 className="mt-3 font-display leading-[0.9] font-bold uppercase md:mt-5">
-        <span className="text-[3rem] md:block md:text-[6.5rem] lg:text-[7.5rem]">{match.teamA}</span>
-        <span className="ml-2.5 text-xl font-semibold text-muted md:my-1 md:ml-0 md:block md:text-3xl">vs</span>
-        <span className="block text-[3rem] md:text-[6.5rem] lg:text-[7.5rem]">{match.teamB}</span>
+      <h1 className="mt-3 font-display leading-[0.9] font-bold uppercase md:mt-4">
+        <span className="text-[3rem] md:block md:text-[5rem] lg:text-[5.75rem]">{match.teamA}</span>
+        <span className="ml-2.5 text-xl font-semibold text-muted md:my-1 md:ml-0 md:block md:text-2xl">vs</span>
+        <span className="block text-[3rem] md:text-[5rem] lg:text-[5.75rem]">{match.teamB}</span>
       </h1>
-      <p className="mt-3 max-w-[21rem] text-base leading-snug text-ink/85 md:mt-6 md:max-w-md md:text-xl">
+      <p className="mt-3 max-w-[21rem] text-base leading-snug text-ink/85 md:mt-4 md:max-w-md md:text-lg">
         Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes o valor de golos indicado.
       </p>
     </header>

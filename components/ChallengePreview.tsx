@@ -1,14 +1,14 @@
 import type { Match } from "@/types/game";
 import { teaserChallenges, timesLabel, totalChallenges } from "@/lib/game";
 
-const MOBILE_COUNT = 3;
+const PREVIEW_COUNT = 3;
 
 /**
- * Preview dos desafios principais da Ronda 1: 3 no mobile, 5 no desktop.
+ * Preview de 3 eventos principais da Ronda 1 (mobile e desktop).
  * Os eventos raros nunca aparecem aqui.
  */
 export function ChallengePreview({ match }: { match: Match }) {
-  const teaser = teaserChallenges(match);
+  const teaser = teaserChallenges(match).slice(0, PREVIEW_COUNT);
   const total = totalChallenges(match);
 
   return (
@@ -20,9 +20,7 @@ export function ChallengePreview({ match }: { match: Match }) {
         {teaser.map((c, i) => (
           <li
             key={c.id}
-            className={`rise items-center justify-between gap-4 rounded-xl bg-surface px-4 py-2.5 md:rounded-2xl md:px-5 md:py-4 ${
-              i < MOBILE_COUNT ? "flex" : "hidden md:flex"
-            }`}
+            className="rise flex items-center justify-between gap-4 rounded-xl bg-surface px-4 py-2.5 md:rounded-2xl md:px-5 md:py-4"
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <span className="font-display text-lg leading-tight font-semibold uppercase md:text-2xl">{c.text}</span>
@@ -34,16 +32,15 @@ export function ChallengePreview({ match }: { match: Match }) {
         {/* Mobile: linha discreta, para não competir com o CTA */}
         <li
           className="rise rounded-xl border border-dashed border-line py-2 text-center font-display text-lg font-semibold text-muted uppercase md:hidden"
-          style={{ animationDelay: `${MOBILE_COUNT * 60}ms` }}
+          style={{ animationDelay: `${teaser.length * 60}ms` }}
         >
-          +{total - MOBILE_COUNT} eventos por revelar
+          +{total - teaser.length} eventos por revelar
         </li>
         <li
-          className="rise card-back hidden min-h-24 flex-col items-center justify-center rounded-2xl text-center text-white md:flex"
+          className="rise card-back hidden min-h-20 items-center justify-center rounded-2xl text-center text-white md:flex"
           style={{ animationDelay: `${teaser.length * 60}ms` }}
         >
           <span className="font-display text-2xl font-bold uppercase">+{total - teaser.length} eventos por revelar</span>
-          <span className="mt-0.5 text-sm text-white/80">Sorteados ronda a ronda, no dia do jogo</span>
         </li>
       </ul>
     </section>
