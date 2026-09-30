@@ -52,4 +52,6 @@ O override fica guardado na sessão do browser. Fecha o separador para limpar.
 
 **Analytics:** ativar *Web Analytics* no projeto do Cloudflare Pages (visitas, sem código). Os eventos (`lib/analytics.ts`) estão preparados mas sem ferramenta ligada.
 
-Ficheiros específicos do Cloudflare em `public/`: `_headers` (cache longo para `/_next/static/*`) e `_redirects` (liga o nome do payload de navegação do Next 16 ao ficheiro exportado).
+Ficheiro específico do Cloudflare em `public/`: `_headers` (cache longo para `/_next/static/*`).
+
+Navegação entre `/` e `/jogo`: links normais (`<a>`), não `next/link`. O Cloudflare Pages não serve os ficheiros RSC que a navegação no cliente do Next usa; quando falham, o Next faz `location.replace` (apaga o histórico) ou fica preso após um regresso do bfcache do Safari.

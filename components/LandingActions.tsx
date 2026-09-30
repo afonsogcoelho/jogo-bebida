@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { Match } from "@/types/game";
 import { clearGame, useGame, useMatchMode } from "@/lib/storage";
 import { totalChallenges } from "@/lib/game";
@@ -9,11 +8,17 @@ import { formatWeekday } from "@/lib/dates";
 import { track } from "@/lib/analytics";
 import { ShareButton } from "@/components/ShareButton";
 import { ChallengePreview } from "@/components/ChallengePreview";
+import { ConfirmSheet } from "@/components/ConfirmSheet";
+
+// Entre "/" e "/jogo" usamos links normais (<a>), não <Link>/router: o site é um export
+// estático e a navegação no cliente do Next depende de ficheiros RSC que o Cloudflare Pages
+// não serve. Quando falham, o Next faz um location.replace (apaga o histórico) ou fica preso
+// após um regresso do bfcache do Safari. Um carregamento normal evita as duas coisas.
 
 export function LandingActions({ match }: { match: Match }) {
   const mode = useMatchMode(match);
   const game = useGame(match);
-  const router = useRouter();
+  const [confirmNew, setConfirmNew] = useState(false);
 
   // Render de servidor: reserva espaço para não haver salto de layout.
   if (mode === null || game === undefined) return <div className="min-h-64 md:min-h-40" aria-hidden="true" />;
@@ -55,29 +60,20 @@ export function LandingActions({ match }: { match: Match }) {
       <div className="action-bar mt-4 flex flex-col gap-1 md:mt-8 md:max-w-sm">
         {inProgress ? (
           <>
-            <Link
+            <a
               href="/jogo"
               className="btn btn-primary"
               onClick={() => track("game_resumed", { round: game.rounds.length })}
             >
               Continuar · Ronda {game.rounds.length}
-            </Link>
-            <button
-              type="button"
-              className="btn btn-ghost"
-              onClick={() => {
-                if (!confirm("Começar um jogo novo? Os desafios sorteados perdem-se.")) return;
-                track("game_restarted", { round: game.rounds.length, from: "landing" });
-                clearGame(match);
-                router.push("/jogo");
-              }}
-            >
+            </a>
+            <button type="button" className="btn btn-ghost" onClick={() => setConfirmNew(true)}>
               Novo jogo
             </button>
           </>
         ) : (
           <>
-            <Link
+            <a
               href="/jogo"
               className="btn btn-primary"
               onClick={() => {
@@ -86,11 +82,26 @@ export function LandingActions({ match }: { match: Match }) {
               }}
             >
               {startLabel}
-            </Link>
+            </a>
             <ShareButton text={shareText} label="Partilhar com o grupo" location="landing" variant="ghost" compact />
           </>
         )}
       </div>
+
+      {confirmNew && game && (
+        <ConfirmSheet
+          title="Novo jogo?"
+          body="Os eventos já sorteados perdem-se."
+          confirmLabel="Começar novo jogo"
+          onConfirm={() => {
+            track("game_restarted", { round: game.rounds.length, from: "landing" });
+            clearGame(match); // a UI atualiza logo (useGame reage ao storage)
+            setConfirmNew(false);
+            window.location.assign("/jogo"); // eslint-disable-line @next/next/no-location-assign-relative-destination -- ver nota no topo
+          }}
+          onCancel={() => setConfirmNew(false)}
+        />
+      )}
     </>
   );
 }

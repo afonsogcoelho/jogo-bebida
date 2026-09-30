@@ -15,6 +15,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
   const currentIndex = game.rounds.length - 1;
   const [viewIndex, setViewIndex] = useState<number | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [confirmRestart, setConfirmRestart] = useState(false);
   // Ronda cujo sorteio está a ser animado agora (só a que acabou de ser sorteada nesta sessão).
   const [animating, setAnimating] = useState<number | null>(() =>
     isFreshDraw(game.rounds[currentIndex].roundId) ? game.rounds[currentIndex].roundId : null,
@@ -68,7 +69,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
   }
 
   function restart() {
-    if (!confirm("Recomeçar? Os desafios sorteados perdem-se.")) return;
+    setConfirmRestart(false);
     track("game_restarted", { round: currentIndex + 1, from: "game" });
     clearGame(match);
   }
@@ -94,7 +95,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
           <span className="text-sm text-muted">
             {match.teamA} vs {match.teamB}
           </span>
-          <button type="button" onClick={restart} className="-mr-2 h-11 px-2 text-sm text-muted hover:text-ink">
+          <button type="button" onClick={() => setConfirmRestart(true)} className="-mr-2 h-11 px-2 text-sm text-muted hover:text-ink">
             Recomeçar
           </button>
         </div>
@@ -193,6 +194,16 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
           </button>
         )}
       </div>
+
+      {confirmRestart && (
+        <ConfirmSheet
+          title="Recomeçar?"
+          body="Os eventos já sorteados perdem-se."
+          confirmLabel="Recomeçar"
+          onConfirm={restart}
+          onCancel={() => setConfirmRestart(false)}
+        />
+      )}
 
       {confirming &&
         (nextRound ? (

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import type { Match } from "@/types/game";
 import { createGame, defaultName, MAX_PLAYERS, MIN_PLAYERS } from "@/lib/game";
 import { markFreshDraw, readSetupDraft, saveGame, saveSetupDraft } from "@/lib/storage";
@@ -58,9 +57,11 @@ export function PlayerSetup({ match }: { match: Match }) {
         {icon}
       </button>
     ) : (
-      <Link href="/" className={cls} aria-label="Voltar ao início">
+      // Link normal (não <Link>): ver nota em LandingActions.
+      // eslint-disable-next-line @next/next/no-html-link-for-pages
+      <a href="/" className={cls} aria-label="Voltar ao início">
         {icon}
-      </Link>
+      </a>
     );
   };
 

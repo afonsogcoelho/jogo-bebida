@@ -30,9 +30,12 @@ function write(key: string, value: string | null) {
 function subscribe(listener: () => void) {
   listeners.add(listener);
   window.addEventListener("storage", listener);
+  // Safari/iOS restaura páginas do back-forward cache sem as recarregar: relê o storage.
+  window.addEventListener("pageshow", listener);
   return () => {
     listeners.delete(listener);
     window.removeEventListener("storage", listener);
+    window.removeEventListener("pageshow", listener);
   };
 }
 
