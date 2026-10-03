@@ -4,8 +4,6 @@ export interface Challenge {
   text: string;
   /** Condição/esclarecimento mostrado em pequeno, ex.: "Se não jogar, vale para…" */
   note?: string;
-  /** Quantas vezes se bebe quando acontece (3–6). Mostrado como "3x". */
-  times: number;
 }
 
 export interface Round {
@@ -20,11 +18,6 @@ export interface Round {
   alternatives: Challenge[];
 }
 
-export interface GlobalRule {
-  text: string;
-  times: number;
-}
-
 export interface Match {
   slug: string;
   teamA: string;
@@ -36,7 +29,6 @@ export interface Match {
   rounds: Round[];
   /** Pool de eventos raros, comum a todas as rondas. Nunca aparece na landing. */
   rareEvents: Challenge[];
-  globalRules: GlobalRule[];
 }
 
 export interface Player {

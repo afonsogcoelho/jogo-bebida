@@ -15,7 +15,7 @@ export function MatchHero({ match }: { match: Match }) {
         <span className="block text-[3rem] md:text-[5rem] lg:text-[5.75rem]">{match.teamB}</span>
       </h1>
       <p className="mt-3 max-w-[21rem] text-base leading-snug text-ink/85 md:mt-4 md:max-w-md md:text-lg">
-        Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes o valor de golos indicado.
+        Cada pessoa recebe um evento principal e um evento raro. Se acontecer, bebes meio copo. Se for o raro, viras o copo.
       </p>
     </header>
   );

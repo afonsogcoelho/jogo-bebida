@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import type { GameState, Match } from "@/types/game";
-import { findChallenge, findRareEvent, finishGame, openNextRound, roundPool, timesLabel } from "@/lib/game";
+import { findChallenge, findRareEvent, finishGame, MAIN_PENALTY, openNextRound, RARE_PENALTY, roundPool } from "@/lib/game";
 import { formatShortDay, getMatchMode, roundClockTime, roundUnlockTime } from "@/lib/dates";
 import { clearGame, isFreshDraw, markFreshDraw, readModeOverride, saveGame } from "@/lib/storage";
 import { track } from "@/lib/analytics";
 import { DrawReveal, type PlayerResult } from "@/components/DrawReveal";
-import { GlobalRules } from "@/components/GlobalRules";
 import { ConfirmSheet } from "@/components/ConfirmSheet";
 import { ShareButton } from "@/components/ShareButton";
 
@@ -80,7 +79,7 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
     ...game.players.map((p) => {
       const r = results[p.id];
       return r
-        ? `${p.name}: ${r.main.text} (${timesLabel(r.main.times)}) · Raro: ${r.rare.text} (${timesLabel(r.rare.times)})`
+        ? `${p.name}: ${r.main.text} (${MAIN_PENALTY.toLowerCase()}) · Raro: ${r.rare.text} (${RARE_PENALTY.toLowerCase()})`
         : p.name;
     }),
     "",
@@ -148,14 +147,13 @@ export function GameScreen({ match, game }: { match: Match; game: GameState }) {
         />
       </div>
 
-      {/* Partilha + regras */}
+      {/* Partilha */}
       <div
         className={`mt-3 flex flex-col gap-1.5 transition-opacity duration-300 md:mt-6 md:gap-3 md:[grid-area:extras] ${
           isAnimating ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
         <ShareButton text={shareText} label="Enviar ronda ao grupo" location="game" kind="round" variant="ghost" compact />
-        <GlobalRules rules={match.globalRules} />
       </div>
 
       {/* Ação principal */}

@@ -187,16 +187,6 @@ body {
   animation: fade-in 200ms ease-out both;
 }
 
-details > summary {
-  list-style: none;
-}
-details > summary::-webkit-details-marker {
-  display: none;
-}
-details[open] .chevron {
-  transform: rotate(180deg);
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

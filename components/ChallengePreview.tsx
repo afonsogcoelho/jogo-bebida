@@ -1,5 +1,5 @@
 import type { Match } from "@/types/game";
-import { teaserChallenges, timesLabel, totalChallenges } from "@/lib/game";
+import { MAIN_PENALTY, teaserChallenges, totalChallenges } from "@/lib/game";
 
 const PREVIEW_COUNT = 3;
 
@@ -25,7 +25,7 @@ export function ChallengePreview({ match }: { match: Match }) {
           >
             <span className="font-display text-lg leading-tight font-semibold uppercase md:text-2xl">{c.text}</span>
             <span className="shrink-0 font-display text-base leading-none font-bold whitespace-nowrap uppercase md:text-xl">
-              {timesLabel(c.times)}
+              {MAIN_PENALTY}
             </span>
           </li>
         ))}

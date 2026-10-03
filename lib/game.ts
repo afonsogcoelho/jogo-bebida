@@ -2,8 +2,10 @@ import type { Challenge, GameState, Match, Player, PlayerPick, Round } from "@/t
 
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 8;
-const MIN_TIMES = 3;
-const MAX_TIMES = 6;
+
+/** O que se bebe quando o evento acontece. Sem números: não queremos cara de apostas. */
+export const MAIN_PENALTY = "Meio copo";
+export const RARE_PENALTY = "Vira o copo";
 
 export function shuffle<T>(items: readonly T[]): T[] {
   const a = [...items];
@@ -95,11 +97,6 @@ export function findRareEvent(match: Match, id: string | undefined): Challenge |
   return match.rareEvents.find((c) => c.id === id);
 }
 
-/** "3 golos" (no grupo, cada gole é um "golo"). Nunca "3x": não queremos cara de apostas. */
-export function timesLabel(times: number) {
-  return times === 1 ? "1 golo" : `${times} golos`;
-}
-
 /** Desafios principais + alternativas (os raros não contam: são surpresa). */
 export function totalChallenges(match: Match) {
   return match.rounds.reduce((sum, r) => sum + roundPool(r).length, 0);
@@ -134,7 +131,6 @@ export function assertValidMatch(match: Match) {
   }
   for (const c of all) {
     if (ids.has(c.id)) throw new Error(`${match.slug}: id repetido ${c.id}`);
-    if (c.times < MIN_TIMES || c.times > MAX_TIMES) throw new Error(`${match.slug}: ${c.id} fora de 3x–6x`);
     ids.add(c.id);
   }
 }

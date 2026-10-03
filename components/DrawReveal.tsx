@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Challenge, Player } from "@/types/game";
-import { timesLabel } from "@/lib/game";
+import { MAIN_PENALTY, RARE_PENALTY } from "@/lib/game";
 
 // Todas as linhas rodam ao mesmo tempo e param em cascata:
 // 2 jogadores ≈ 1,6 s · 8 jogadores ≈ 3,7 s.
@@ -100,7 +100,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                   {main.note && <p className="mt-0.5 text-[13px] leading-snug text-muted">{main.note}</p>}
                 </div>
                 <span className="shrink-0 pt-0.5 font-display text-lg leading-[1.1] font-bold whitespace-nowrap uppercase md:text-xl">
-                  {timesLabel(main.times)}
+                  {MAIN_PENALTY}
                 </span>
               </div>
             ) : (
@@ -116,7 +116,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                   className="shrink-0 pt-0.5 font-display text-lg leading-[1.1] font-bold whitespace-nowrap text-ink/20 uppercase md:text-xl"
                   aria-hidden="true"
                 >
-                  ? golos
+                  {MAIN_PENALTY}
                 </span>
               </div>
             )}
@@ -132,7 +132,7 @@ export function DrawReveal({ players, results, pool, animate, onDone }: Props) {
                   <span
                     className={`shrink-0 font-display text-sm leading-none font-bold whitespace-nowrap text-accent uppercase ${spinning ? "pop pop-late" : ""}`}
                   >
-                    {timesLabel(rare.times)}
+                    {RARE_PENALTY}
                   </span>
                 </>
               ) : (

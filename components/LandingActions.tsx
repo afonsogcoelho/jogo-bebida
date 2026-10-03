@@ -23,7 +23,7 @@ export function LandingActions({ match }: { match: Match }) {
   // Render de servidor: reserva espaço para não haver salto de layout.
   if (mode === null || game === undefined) return <div className="min-h-64 md:min-h-40" aria-hidden="true" />;
 
-  const shareText = `${match.teamA} vs ${match.teamB}, ${formatWeekday(match)}. Cada pessoa recebe um evento principal e um evento raro por ronda. Se acontecer, bebes o valor de golos indicado.`;
+  const shareText = `${match.teamA} vs ${match.teamB}, ${formatWeekday(match)}. Cada pessoa recebe um evento principal e um evento raro por ronda. Se acontecer, bebes meio copo. Se for o raro, viras o copo.`;
   const inProgress = game && !game.finished;
   const startLabel = mode === "pre" ? "Criar jogo" : mode === "post" ? "Jogar mesmo assim" : "Começar";
 

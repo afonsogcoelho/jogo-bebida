@@ -1,4 +1,4 @@
-# Joga o jogo · Portugal vs Dinamarca
+# Joga o jogo · Portugal vs Noruega
 
 Companion game para ver futebol com amigos. Next.js (App Router) + TypeScript + Tailwind.
 Site **100% estático** (`output: "export"` → `out/`): sem backend, estado em `localStorage`.
@@ -17,7 +17,7 @@ npm run preview    # build + Cloudflare Pages local (npx wrangler pages dev out)
 ## Como funciona
 
 - **Qualquer altura (também antes do jogo):** Criar jogo → nº de jogadores (2–8) → nomes → Sortear Ronda 1.
-- Cada jogador recebe, por ronda, **1 desafio principal (3x–6x) + 1 evento raro (6x)**.
+- Cada jogador recebe, por ronda, **1 desafio principal (meio copo) + 1 evento raro (vira o copo)**.
 - Rondas: 0'–22' · 23'–45'+ · 46'–67' · 68'–90'+. Os desafios de uma ronda só contam no seu intervalo.
 - As rondas 2–4 só podem ser sorteadas perto da hora prevista (kickoff + minuto da ronda, +15 min de intervalo na 2.ª parte, com 3 min de margem), e pedem sempre confirmação manual ("Já vão nos 23'?").
 - Refresh nunca volta a sortear.
@@ -32,11 +32,11 @@ O override fica guardado na sessão do browser. Fecha o separador para limpar.
 
 ## Conteúdo
 
-- Jogo atual: `data/matches/portugal-dinamarca.ts` (kickoff, 4 rondas, eventos raros, regras gerais).
+- Jogo atual: `data/matches/portugal-noruega.ts` (kickoff, 4 rondas, eventos raros).
 - Cada ronda tem 5 desafios principais (`challenges`, canónicos) + 3 `alternatives`. Com 2–5 jogadores só se sorteiam principais; com 6–8 entram os 5 principais + as alternativas necessárias.
-- `rareEvents`: pool comum (6x). Únicos dentro da ronda, podem repetir entre rondas, nunca aparecem na landing.
+- `rareEvents`: pool comum. Únicos dentro da ronda, podem repetir entre rondas, nunca aparecem na landing.
 - O teaser da landing mostra os 5 principais da Ronda 1.
-- Em dev, `assertValidMatch` valida ids únicos, ≥ 8 desafios por ronda, ≥ 8 raros e valores entre 3x e 6x.
+- Em dev, `assertValidMatch` valida ids únicos, ≥ 8 desafios por ronda e ≥ 8 raros.
 - Imagem de partilha e ícones: `app/opengraph-image.png`, `app/icon.png`, `app/apple-icon.png` (PNG estáticos; num jogo novo, trocar a imagem).
 - Novo jogo: criar `data/matches/<slug>.ts` e trocar `CURRENT_MATCH` em `data/matches/index.ts`.
 

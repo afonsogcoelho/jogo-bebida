@@ -20,7 +20,7 @@ const siteUrl =
   "http://localhost:3000";
 
 const title = `${match.teamA} vs ${match.teamB} · Joga o jogo`;
-const description = "Cada um recebe um desafio e um evento raro. Quando acontecer, bebe o número indicado.";
+const description = "Cada um recebe um evento e um evento raro. Se acontecer, bebes meio copo. Se for o raro, viras o copo.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

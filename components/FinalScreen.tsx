@@ -1,7 +1,7 @@
 "use client";
 
 import type { GameState, Match } from "@/types/game";
-import { findChallenge, findRareEvent, timesLabel } from "@/lib/game";
+import { findChallenge, findRareEvent, MAIN_PENALTY, RARE_PENALTY } from "@/lib/game";
 import { clearGame } from "@/lib/storage";
 import { track } from "@/lib/analytics";
 import { ShareButton } from "@/components/ShareButton";
@@ -17,7 +17,7 @@ export function FinalScreen({ match, game }: { match: Match; game: GameState }) 
         <p className="mt-4 text-lg text-ink/85">Revanche no próximo jogo.</p>
       </header>
 
-      <section aria-label="Resumo" className="mt-10 grid gap-7 md:mt-14 md:grid-cols-2 md:gap-x-12 md:gap-y-10">
+      <section aria-label="Resumo" className="mt-10 grid grid-cols-1 gap-7 md:mt-14 md:grid-cols-2 md:gap-x-12 md:gap-y-10">
         {game.rounds.map((assignment, i) => {
           const round = match.rounds[i];
           return (
@@ -36,18 +36,18 @@ export function FinalScreen({ match, game }: { match: Match; game: GameState }) 
                       <span className="w-24 shrink-0 truncate text-muted">{p.name}</span>
                       <div className="min-w-0 flex-1">
                         <div className="flex justify-between gap-3">
-                          <span>{main?.text}</span>
-                          {main && <span className="shrink-0 font-semibold whitespace-nowrap">{timesLabel(main.times)}</span>}
+                          <span className="min-w-0">{main?.text}</span>
+                          {main && <span className="shrink-0 font-semibold whitespace-nowrap">{MAIN_PENALTY}</span>}
                         </div>
                         {rare && (
                           <div className="mt-0.5 flex justify-between gap-3 text-sm text-muted">
-                            <span>
-                              <span className="mr-1.5 text-[11px] font-semibold tracking-[0.12em] text-accent uppercase">
+                            <span className="min-w-0">
+                              <span className="mr-1.5 inline-block text-[11px] font-semibold tracking-[0.12em] text-accent uppercase">
                                 Raro
                               </span>
                               {rare.text}
                             </span>
-                            <span className="shrink-0 whitespace-nowrap">{timesLabel(rare.times)}</span>
+                            <span className="shrink-0 whitespace-nowrap">{RARE_PENALTY}</span>
                           </div>
                         )}
                       </div>
